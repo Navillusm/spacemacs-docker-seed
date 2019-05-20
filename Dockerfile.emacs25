@@ -28,6 +28,11 @@ COPY private "${UHOME}/.emacs.d/private"
 
 RUN usermod -a -G docker spacemacser
 
+RUN touch /var/run/docker.sock
+RUN chown root:docker /var/run/docker.sock
+
 # Install layers dependencies and initialize the user
 RUN install-deps
 
+RUN ln -s /mnt/workspace/.ssh /home/emacs/.ssh
+RUN rm -rf /home/emacs/.emacs.d/.cache && ln -s /mnt/workspace/.spacemacs.cache /home/emacs/.emacs.d/.cache
