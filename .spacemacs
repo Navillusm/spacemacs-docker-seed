@@ -32,6 +32,7 @@ values."
    dotspacemacs-configuration-layers
    '(auto-completion
      colors
+     (c-c++ :variables c-c++-enable-clang-support t)
      deft
      docker
      emacs-lisp
@@ -39,6 +40,7 @@ values."
      evil-snipe
      git
      github
+     go
      helm
      ibuffer
      imenu-list
@@ -55,6 +57,7 @@ values."
      version-control
      vinegar
      react
+     yaml
      javascript)
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -133,7 +136,7 @@ values."
    ;; new versions works via git commands, thus it calls GitHub services
    ;; whenever you start Emacs. (default nil)
    dotspacemacs-check-for-update nil
-   
+
    ;; If non-nil, a form that evaluates to a package directory. For example, to
    ;; use different package directories for different Emacs versions, set this
    ;; to `emacs-version'.
@@ -165,7 +168,7 @@ values."
    ;; List sizes may be nil, in which case
    ;; `spacemacs-buffer-startup-lists-length' takes effect.
    dotspacemacs-startup-lists '((recents . 5)
-                                (projects . 7))
+                                (projects . 50))
 
    ;; True if the home buffer should respond to resize events.
    dotspacemacs-startup-buffer-responsive t
@@ -182,8 +185,11 @@ values."
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(darkokai
                          monokai
+			 xenburn
+                         solarized-dark
+                         leuven
                          spacemacs-dark
-                         spacemacs-light)
+			 spacemacs-light)
 
    ;; Set the theme for the Spaceline. Supported themes are `spacemacs',
    ;; `all-the-icons', `custom', `doom', `vim-powerline' and `vanilla'. The
@@ -453,5 +459,8 @@ This function is called at the very end of Spacemacs startup, after layer
 configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
+  (display-time-mode 1)
+  (setq-default js2-basic-offset 4)
+  (setq-default js2-indent-level 4)
   (setq browse-url-browser-function 'browse-url-firefox)
   )
