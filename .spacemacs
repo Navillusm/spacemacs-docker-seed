@@ -462,5 +462,27 @@ before packages are loaded."
   (display-time-mode 1)
   (setq-default js2-basic-offset 4)
   (setq-default js2-indent-level 4)
+  (defvar testing-command "echo No testing command configured!")
+
+  (defun execute-tests ()
+    (interactive)
+    (when (and (buffer-modified-p)
+               (y-or-n-p (format "Save file %s? " (buffer-file-name))))
+      (save-buffer))
+    (with-output-to-temp-buffer "*automated tests*"
+      (shell-command (concat "echo Running: " testing-command) "*automated tests*")
+      (shell-command testing-command
+                     "*automated tests*")
+      (pop-to-buffer "*automated tests*")))
+
+  (defun test-javascript ()
+    (concat "npm run test --prefix " (file-at-git-root "")))
+
+  (add-hook 'js2-mode-hook
+            (lambda ()
+              (set (make-local-variable 'testing-command)
+                   (test-javascript))))
+  (spacemacs/set-leader-keys "ot" `execute-tests)
+
   (setq browse-url-browser-function 'browse-url-firefox)
   )
